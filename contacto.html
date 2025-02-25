@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
+    <style>
+        body { text-align: center; background: #121212; color: white; font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; }
+        button { background: #333; color: white; padding: 10px; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #555; }
+        a { color: lightblue; text-decoration: none; display: block; margin: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Contacto</h1>
+        <p>Puedes escribirme a través de este formulario:</p>
+
+        <form action="https://formspree.io/f/{tu-email}" method="POST">
+            <input type="text" name="nombre" placeholder="Tu Nombre" required>
+            <input type="email" name="email" placeholder="Tu Correo" required>
+            <textarea name="mensaje" placeholder="Tu Mensaje" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+
+        <p>O sígueme en mis redes sociales:</p>
+        <a href="https://github.com/Yassirhicham">GitHub</a>
+        <a href="#">LinkedIn</a>
+
+        <a href="index.html">⬅️ Volver al inicio</a>
+    </div>
+
+</body>
+</html>
