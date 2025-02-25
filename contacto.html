@@ -8,8 +8,9 @@
         body { text-align: center; background: #121212; color: white; font-family: Arial, sans-serif; }
         .container { max-width: 600px; margin: auto; padding: 20px; }
         input, textarea { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; }
-        button { background: #333; color: white; padding: 10px; border-radius: 5px; cursor: pointer; }
+        button { background: #333; color: white; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%; }
         button:hover { background: #555; }
+        label { display: block; text-align: left; margin-top: 10px; font-weight: bold; }
         a { color: lightblue; text-decoration: none; display: block; margin: 10px; font-size: 1.2rem; }
         .social-icons { margin-top: 20px; }
         .social-icons a { display: inline-block; margin: 10px; font-size: 1.5rem; }
@@ -19,21 +20,24 @@
 
     <div class="container">
         <h1>Contacto</h1>
-        <p>Puedes escribirme a través de este formulario:</p>
+        <p>Envíame un mensaje a través del siguiente formulario:</p>
 
-        <form action="https://formspree.io/f/{tu-email}" method="POST">
-            <input type="text" name="nombre" placeholder="Tu Nombre" required>
-            <input type="email" name="email" placeholder="Tu Correo" required>
-            <textarea name="mensaje" placeholder="Tu Mensaje" required></textarea>
+        <!-- Formulario conectado con Formspree -->
+        <form action="https://formspree.io/f/xeoebnok" method="POST">
+            <label for="email">Tu correo electrónico:</label>
+            <input type="email" id="email" name="email" placeholder="Ejemplo: tuemail@gmail.com" required>
+
+            <label for="message">Tu mensaje:</label>
+            <textarea id="message" name="message" placeholder="Escribe tu mensaje aquí..." required></textarea>
+
             <button type="submit">Enviar</button>
         </form>
 
-        <p>O sígueme en mis redes sociales:</p>
+        <p>También puedes seguirme en mis redes sociales:</p>
 
         <div class="social-icons">
             <a href="https://www.instagram.com/tu_usuario" target="_blank">📸 Instagram</a>
-            <a href="https://www.linkedin.com/in/tu_usuario" target="_blank">💼 LinkedIn</a>
-            <a href="https://github.com/Yassirhicham" target="_blank">🐙 GitHub</a>
+            <a href="www.linkedin.com/in/yassir-h-6a59b713a" target="_blank">💼 LinkedIn</a>
         </div>
 
         <a href="index.html">⬅️ Volver al inicio</a>
