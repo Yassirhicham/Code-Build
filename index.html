@@ -10,7 +10,63 @@
             padding: 0;
             box-sizing: border-box;
             font-family: Arial, sans-serif;
+            .eyes {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
         }
+        
+        .eye {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .pupil {
+            width: 20px;
+            height: 20px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            transition: 0.05s;
+        }
+
+        }
+        <div class="eyes">
+            <div class="eye">
+                <div class="pupil"></div>
+            </div>
+            <div class="eye">
+                <div class="pupil"></div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener("mousemove", (event) => {
+                const eyes = document.querySelectorAll(".eye");
+                eyes.forEach((eye) => {
+                    const rect = eye.getBoundingClientRect();
+                    const eyeX = rect.left + rect.width / 2;
+                    const eyeY = rect.top + rect.height / 2;
+                    const deltaX = event.clientX - eyeX;
+                    const deltaY = event.clientY - eyeY;
+                    const angle = Math.atan2(deltaY, deltaX);
+                    const pupil = eye.querySelector(".pupil");
+        
+                    // Mueve la pupila dentro del ojo
+                    const maxMove = 10; // Límite de movimiento dentro del ojo
+                    pupil.style.transform = `translate(${Math.cos(angle) * maxMove}px, ${Math.sin(angle) * maxMove}px)`;
+                });
+            });
+        </script>
+
         body {
             background-color: #121212;
             color: white;
