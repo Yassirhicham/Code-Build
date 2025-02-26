@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar de Detección - Proyecto Arduino</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: 3px solid #e8491d;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            padding-bottom: 10px;
+        }
+        section {
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #35424a;
+            color: white;
+            margin-top: 20px;
+        }
+        pre {
+            background: #222;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Radar de Detección - Proyecto Arduino</h1>
+    </header>
+    <div class="container">
+        <section>
+            <h2>Introducción</h2>
+            <p>Este proyecto consiste en la implementación de un radar de detección utilizando un sensor ultrasónico, un servo motor y una placa Arduino. 
+            La idea es escanear un área determinada midiendo distancias a través del sensor y representarlas visualmente.</p>
+        </section>
+        <section>
+            <h2>Implementación</h2>
+            <p>El sistema se basa en el uso de un sensor ultrasónico HC-SR04, el cual mide la distancia de los objetos cercanos. 
+            Este sensor está montado sobre un servo motor, que se encarga de rotarlo en un rango de 15° a 165° para cubrir un amplio campo de visión.
+            Los datos de distancia se envían a través del puerto serie de la placa Arduino, permitiendo su visualización en un software como Processing.</p>
+        </section>
+        <section>
+            <h2>Resultados</h2>
+            <p>El sistema es capaz de detectar objetos a diferentes distancias y representar sus posiciones en tiempo real. 
+            Se pueden generar alertas cuando un objeto está a una distancia crítica. Este proyecto tiene aplicaciones en robótica, 
+            seguridad y monitoreo de áreas restringidas.</p>
+        </section>
+        <section>
+            <h2>Código Arduino</h2>
+            <pre>
+// Incluye la librería del Servo
+#include <Servo.h>
+
+const int trigPin = 10;
+const int echoPin = 11;
+long duration;
+int distance;
+Servo myServo;
+
+void setup() {
+    pinMode(trigPin, OUTPUT);
+    pinMode(echoPin, INPUT);
+    Serial.begin(9600);
+    myServo.attach(12);
+}
+
+void loop() {
+    for(int i = 15; i <= 165; i++) {  
+        myServo.write(i);
+        delay(30);
+        distance = calculateDistance();
+        Serial.print(i);
+        Serial.print(",");
+        Serial.print(distance);
+        Serial.print(".");
+    }
+    for(int i = 165; i > 15; i--) {  
+        myServo.write(i);
+        delay(30);
+        distance = calculateDistance();
+        Serial.print(i);
+        Serial.print(",");
+        Serial.print(distance);
+        Serial.print(".");
+    }
+}
+
+int calculateDistance() { 
+    digitalWrite(trigPin, LOW); 
+    delayMicroseconds(2);
+    digitalWrite(trigPin, HIGH); 
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+    duration = pulseIn(echoPin, HIGH);
+    distance = duration * 0.034 / 2;
+    return distance;
+}
+            </pre>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2024 Yassir Hicham - Proyecto Radar</p>
+    </footer>
+</body>
+</html>
