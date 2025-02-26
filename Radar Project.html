@@ -6,75 +6,92 @@
     <title>Radar de Detección - Proyecto Arduino</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #121212;
+            color: #ffffff;
+            text-align: center;
         }
         .container {
-            width: 80%;
+            width: 90%;
+            max-width: 1000px;
             margin: auto;
-            overflow: hidden;
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.3);
         }
         header {
-            background: #35424a;
+            background: linear-gradient(135deg, #00ffcc, #007777);
             color: #ffffff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: 3px solid #e8491d;
-            text-align: center;
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
         }
         header h1 {
             margin: 0;
-            padding-bottom: 10px;
+            font-size: 28px;
+            letter-spacing: 1.5px;
         }
-        section {
-            padding: 20px;
-            background: white;
-            margin-top: 20px;
+        .content {
+            text-align: left;
+        }
+        .image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            box-shadow: 0px 0px 10px rgba(0, 255, 204, 0.5);
+            transition: transform 0.3s ease;
         }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #35424a;
-            color: white;
-            margin-top: 20px;
+        .image:hover {
+            transform: scale(1.05);
         }
         pre {
-            background: #222;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
+            background: #000;
+            color: #00ffcc;
+            padding: 20px;
+            border-radius: 8px;
             overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.5);
+        }
+        footer {
+            background: linear-gradient(135deg, #007777, #00ffcc);
+            color: #ffffff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 0 0 12px 12px;
+        }
+        .highlight {
+            color: #00ffcc;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Radar de Detección - Proyecto Arduino</h1>
-    </header>
     <div class="container">
-        <section>
-            <h2>Introducción</h2>
-            <p>Este proyecto consiste en la implementación de un radar de detección utilizando un sensor ultrasónico, un servo motor y una placa Arduino. 
-            La idea es escanear un área determinada midiendo distancias a través del sensor y representarlas visualmente.</p>
-        </section>
-        <section>
-            <h2>Implementación</h2>
-            <p>El sistema se basa en el uso de un sensor ultrasónico HC-SR04, el cual mide la distancia de los objetos cercanos. 
-            Este sensor está montado sobre un servo motor, que se encarga de rotarlo en un rango de 15° a 165° para cubrir un amplio campo de visión.
-            Los datos de distancia se envían a través del puerto serie de la placa Arduino, permitiendo su visualización en un software como Processing.</p>
-        </section>
-        <section>
-            <h2>Resultados</h2>
-            <p>El sistema es capaz de detectar objetos a diferentes distancias y representar sus posiciones en tiempo real. 
-            Se pueden generar alertas cuando un objeto está a una distancia crítica. Este proyecto tiene aplicaciones en robótica, 
-            seguridad y monitoreo de áreas restringidas.</p>
-        </section>
-        <section>
-            <h2>Código Arduino</h2>
+        <header>
+            <h1>Radar de Detección - Proyecto Arduino</h1>
+        </header>
+        <div class="content">
+            <h2>🔍 Introducción</h2>
+            <p>Este innovador proyecto consiste en la implementación de un <span class="highlight">radar de detección</span> utilizando un sensor ultrasónico, un servo motor y una placa Arduino. 
+            Gracias a este sistema, es posible escanear un área y detectar la presencia de objetos cercanos en tiempo real. Su aplicación se extiende desde <span class="highlight">sistemas de seguridad</span> hasta <span class="highlight">robótica autónoma</span>.</p>
+            
+            <h2>⚙️ Implementación</h2>
+            <p>El radar está compuesto por un <span class="highlight">sensor ultrasónico HC-SR04</span> montado sobre un servo motor, que se mueve de 15° a 165° para cubrir un amplio campo de visión. 
+            La placa Arduino procesa los datos y los transmite para su <span class="highlight">visualización en tiempo real</span>, permitiendo detectar objetos con gran precisión.</p>
+            <img src="646fa5174758a.png" alt="Imagen del Circuito" class="image">
+            
+            <h2>📊 Resultados</h2>
+            <p>El sistema es capaz de identificar objetos a diferentes distancias y representarlos en un gráfico en tiempo real. 
+            Gracias a su precisión, puede utilizarse en <span class="highlight">vehículos autónomos</span>, <span class="highlight">sistemas de seguridad</span> y <span class="highlight">monitoreo industrial</span>. 
+            Además, es posible configurar alertas cuando un objeto se encuentra en una zona crítica.</p>
+            <img src="radar-arduino.png" alt="Imagen de Resultados" class="image">
+            
+            <h2>💻 Código Arduino</h2>
             <pre>
 // Incluye la librería del Servo
 #include <Servo.h>
@@ -124,10 +141,11 @@ int calculateDistance() {
     return distance;
 }
             </pre>
-        </section>
+        </div>
+        <button onclick="window.location.href='proyectos.html'" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: #00ffcc; color: #121212; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">Volver a Proyectos</button>
+        <footer>
+            <p>&copy; 2024 Yassir Hicham - Proyecto Radar</p>
+        </footer>
     </div>
-    <footer>
-        <p>&copy; 2024 Yassir Hicham - Proyecto Radar</p>
-    </footer>
 </body>
 </html>
