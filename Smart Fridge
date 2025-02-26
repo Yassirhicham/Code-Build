@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Fridge - Proyecto IoT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: 3px solid #e8491d;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            padding-bottom: 10px;
+        }
+        section {
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #35424a;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Smart Fridge - Proyecto IoT</h1>
+    </header>
+    <div class="container">
+        <section>
+            <h2>Introducción</h2>
+            <p>En la era digital, las neveras inteligentes están revolucionando la gestión de alimentos en el hogar mediante la conectividad IoT y sensores avanzados.</p>
+        </section>
+        <section>
+            <h2>Implementación</h2>
+            <p>Este proyecto convierte cualquier nevera convencional en inteligente mediante una placa ESP32 y un sensor DHT11 para monitorear temperatura y humedad.</p>
+        </section>
+        <section>
+            <h2>Resultados</h2>
+            <p>Se ha logrado visualizar los datos en una app móvil mediante Blynk, permitiendo alertas en tiempo real cuando la temperatura está fuera de rango.</p>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2024 Yassir Hicham - Proyecto Smart Fridge</p>
+    </footer>
+</body>
+</html>
