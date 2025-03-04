@@ -118,7 +118,7 @@
             <h2>⚙️ Implementación</h2>
             <p>Mi idea consiste en desarrollar un sistema que permita convertir cualquier nevera convencional en una nevera inteligente y conectada. La génesis de esta idea surgió luego de una conversación con la jefa de planta de un hospital. Durante nuestra charla, ella nos informó sobre un problema que enfrentan con el almacenamiento de muestras de sangre y medicamentos especiales que requieren mantenerse a temperaturas bajas. En el hospital, carecen de neveras inteligentes que puedan notificar si la temperatura ha variado fuera de los rangos específicos necesarios para conservar la integridad de las muestras. Esto representa un desafío significativo, ya que es crucial mantener las muestras dentro de un rango de temperatura específico para obtener resultados precisos. La jefa de planta nos mencionó que actualmente solo disponen de una nevera inteligente, ya que el costo de adquirir más es prohibitivo y actualmente no cuentan con la capacidad financiera para hacerlo.</p>
             <p>Hemos logrado avanzar en el proyecto al programar la placa ESP32 para que funcione con una aplicación móvil y se conecte a un sensor de temperatura y humedad (DHT11). Según lo que encontramos en programarfacil (2n), este sensor tiene las siguientes características:</p>
-            <img src="caracteristicas.png" alt="características" class="image">
+            <img src="Fotos/caracteristicas.png" alt="características" class="image">
             <p>Entendemos que el sensor actual no es ideal para temperaturas bajas de neveras, pero por ahora es lo que tenemos. En el futuro, planeamos cambiar al sensor LM75, que tiene un rango de temperaturas más amplio, desde -25 ºC hasta 100 ºC.</p>
             <h4><strong>🌡️ Características del LM75</strong> según DigiKey </h4>
     <ul>
@@ -190,8 +190,8 @@
                 aproximadamente 5 días.
             </p>
             <div style="text-align: center;">
-                <img src="DHT11.png" alt="DHT11" class="imagen" style="display: inline-block;">
-                <img src="ESP32.png" alt="ESP32" class="imagen1" style="display: inline-block;">
+                <img src="Fotos/DHT11.png" alt="DHT11" class="imagen" style="display: inline-block;">
+                <img src="Fotos/ESP32.png" alt="ESP32" class="imagen1" style="display: inline-block;">
             </div>
             <p>Con este código y con la opción events and notification que tiene la aplicación Blynk he podido
                 crear un aviso (Warining) que en este caso cuando baja la temperatura de -5 ºC me avisa
@@ -208,8 +208,8 @@
                     delay(1000);
                 }
                 </code></pre> 
-            <img src="aviso.png" alt="aviso" class="image">
-            <img src="APP.png" alt="APP" class="imagen">   
+            <img src="Fotos/aviso.png" alt="aviso" class="image">
+            <img src="Fotos/APP.png" alt="APP" class="imagen">   
             <p>Este sistema propuesto combina la funcionalidad de monitoreo de temperatura y humedad
                 dentro de las neveras con características adicionales que mejoran la experiencia del usuario y
                 brindan información útil tanto para el usuario como para el fabricante de las neveras.

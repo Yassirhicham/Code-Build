@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT based Home Automation - Proyecto Arduino</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.3);
+        }
+        .contenedor {
+            text-align: center; /* Centra las imágenes */
+        }
+        .contenedor img {
+            width: 200px; /* Ajusta el tamaño según necesites */
+            margin: 10px;
+            display: inline-block;
+        }
+        header {
+            background: linear-gradient(135deg, #00ffcc, #007777);
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1.5px;
+        }
+        .content {
+            text-align: left;
+        }
+        .image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0px 0px 10px rgba(0, 255, 204, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .image:hover {
+            transform: scale(1.05);
+        }
+        pre {
+            background: #000;
+            color: #00ffcc;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.5);
+        }
+        footer {
+            background: linear-gradient(135deg, #1e1e1e, #1e1e1e);
+            color: #ffffff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 0 0 12px 12px;
+        }
+        .highlight {
+            color: #00ffcc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>IoT based Home Automation - Proyecto Arduino</h1>
+        </header>
+        <div class="content">
+            <h2>🔍 Introducción</h2>
+            <p>En este proyecto con la placa ESP32, mi compañera Iris y yo hemos mostrado cómo realizar una Automatización Domótica IoT, implementando un código en Arduino que estará vinculado a una aplicación.
+
+                Esta aplicación, llamada Blynk, nos permitirá controlar manualmente, tanto desde fuera de casa como desde dentro, los dispositivos conectados a Internet que se encuentren en el hogar.
+                
+                Por último, con la ayuda del Asistente de Google y una plataforma, este control también se podrá realizar mediante comandos de voz.</p>
+            
+            <h2>⚙️ Implementación</h2>
+            <p>En este apartado se explicará el funcionamiento del proyecto, así como el código Arduino implementado y también las aplicaciones utilizadas.</p>
+            <h3>Objetivos del Proyecto</h3>
+            <p>El principal objetivo es optimizar el consumo o funcionamiento de los dispositivos domésticos.
+
+                Es un proyecto que podría aplicarse a diversos aparatos que encontramos en nuestro hogar, pero para simplificarlo, lo llevaré a cabo con un elemento básico.
+                
+                Para mostrar de forma sencilla y breve los conceptos fundamentales, he adaptado este proyecto a una luz, es decir, automatizaré el consumo y el funcionamiento de una luz utilizando la placa ESP32 y una aplicación que me permitirá encenderla o apagarla de forma remota, en caso de que, por ejemplo, me la haya dejado encendida.</p>
+             <h3>Material utilizado</h3>   
+             <div class="contenedor">
+                <img src="Fotos/ESP32.png" alt="Imagen de Esp 32" class="image">
+                <img src="Fotos/Rele.png" alt="Imagen del Rele" class="image">
+                <img src="Fotos/Luz.png" alt="Imagen de la luz" class="image">
+                <img src="Fotos/Adaptador.png" alt="Imagen del adaptador" class="image">
+            </div>
+            <h3>Montaje</h3>
+            <div class="contenedor">
+                <img src="Fotos/montaje.png" alt="Imagen del montaje1" class="image">
+                <img src="Fotos/montaje1.png" alt="Imagen del montaje2" class="image">
+                <img src="Fotos/montaje2.png" alt="Imagen del montaje3" class="image">
+            </div>
+           <h3>Conexiones</h3>
+           <p>El relé se conecta a la placa ESP32 mediante tres pines:</p>
+            <ul>
+                <li>El primer pin ‘S’ se conecta a la salida digital ‘D2’.</li>
+                <li>El pin ‘+’ se conecta a ‘VCC 5V’.</li>
+                <li>Por último, el pin ‘-’ se conecta a ‘GND’.</li>
+            </ul>
+            <p>S: Señal </p>
+            <p>+: positivo</p>
+            <p>-: negativo</p>
+
+            <h3>Aplicación Blynk</h3>
+            <p>Esta aplicación puede gestionar dispositivos IoT, y en mi caso, gestiona el estado de la luz.
+
+                Esta gestión es muy sencilla, ya que dentro de la aplicación podemos tener registrados varios dispositivos.
+                
+                Para poder vincular la luz con Blynk, necesitamos que la propia aplicación nos proporcione el ‘Token’ y el ‘ID’. Esto se nos proporciona una vez nos hemos registrado.
+            </p>
+            <img src="Fotos/Web.png" alt="Imagen de la web" class="image"> 
+            
+            <h3>Parámetros proporcionados</h3>
+            <p>Para enlazar la luz, se define el ID y el Token:</p>
+            <pre>
+                #define BLYNK_TEMPLATE_ID "TMPL5ionyk6pQ"
+                #define BLYNK_TEMPLATE_NAME "llum"
+                #define BLYNK_AUTH_TOKEN "kqqOw3dEBnwSb3FEHjBbHsKYawXy9RMv"
+            </pre>
+            <p>Función BLYNK_WRITE</p>
+            <pre>
+                BLYNK_WRITE(V2){
+                    digitalWrite(V2, param.asInt());
+                }
+            </pre>
+            <p>Esta función la proporciona la propia biblioteca de Blynk y se invoca cada vez que se recibe un dato desde el dispositivo vinculado con la aplicación. En este caso, la luz se identifica como V2.
+
+            </p>
+            <p>Conexión con Blynk</p>
+            <pre>
+                Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
+            </pre>
+            <p>En esta línea de código se inicia la comunicación con el servidor. Donde ‘blynk.cloud’ es la dirección del servidor en la nube de Blynk, y ‘80’ es el puerto para el protocolo HTTP.</p>
+            <img src="Fotos/Web1.png" alt="Imagen de la web" class="image"> 
+            <p>Plataforma Twilio i ThingESP:</p>   
+            <pre>ThingESP32 thing("iriscruz", "ControlEsp32", "ProjectIris");</pre> 
+            <p>Por último, con esta línea de comandos podemos conectarnos a la plataforma en la nube ThingESP, donde, a través de un enlace que se generará, podremos utilizar un ‘bot’ (llamado Twilio) a través de WhatsApp, es decir, un contacto que podremos controlar con nuestra voz.</p>
+
+
+            <h2>📊 Resultados</h2>
+            <p>En este apartado del informe veremos los resultados de cómo se puede controlar la luz tanto a través de la aplicación Blynk como con el Asistente de Google.</p>
+            <h3>- Control de la luz mediante Blynk</h3>
+            <p>Quan la llum està encesa veiem a la placa ESP32 una led de color blau, aquesta
+                ens confirma que estem emeten llum.
+            </p>
+            <div class="contenedor">
+                <img src="Fotos/Resultados.png" alt="Imagen del resultado" class="image">
+                <img src="Fotos/resultados1.png" alt="Imagen del resultado2" class="image">
+            </div>
+
+            <p> Control de la luz mediante el Assistente de Google</p>
+            <div class="contenedor">
+                <img src="Fotos/Resultados2.png" alt="Imagen del resultado" class="image">
+                <img src="Fotos/resultados3.png" alt="Imagen del resultado2" class="image">
+                <img src="Fotos/resultados4.png" alt="Imagen del resultado2" class="image">
+            </div>
+
+            
+            <h2>💻 Código Arduino</h2>
+<pre>            
+// Incluye la librería del Servo
+#define BLYNK_PRINT Serial
+#define BLYNK_TEMPLATE_ID "TMPL5ionyk6pQ"
+#define BLYNK_TEMPLATE_NAME "llum"
+#define BLYNK_AUTH_TOKEN "kqqOw3dEBnwSb3FEHjBbHsKYawXy9RMv"
+
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <BlynkSimpleEsp32.h>
+#include <ThingESP.h>
+
+// Configuración de ThingESP
+ThingESP32 thing("yassirhicham", "ControlEsp32", "ProjectYassir");
+
+// Definición de pines y variables
+int LIGHT = 2;
+unsigned long previousMillis = 0;
+const long INTERVAL = 6000;
+
+// Credenciales de conexión
+char auth[] = BLYNK_AUTH_TOKEN;
+char ssid[] = "wifi_iris";
+char pass[] = "holacomoestas";
+
+// Función para manejar el pin virtual V2 con Blynk
+BLYNK_WRITE(V2) {
+    digitalWrite(V2, param.asInt());
+}
+
+// Configuración inicial
+void setup() {
+    pinMode(LIGHT, OUTPUT);
+    pinMode(V2, OUTPUT);
+
+    // Conectar a Blynk
+    Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
+
+    // Conectar a ThingESP
+    thing.SetWiFi(ssid, pass);
+    thing.initDevice();
+}
+
+// Función para manejar respuestas a comandos en ThingESP
+String HandleResponse(String query) {
+    if (query == "light on") {
+        digitalWrite(LIGHT, 1);
+        return "Done: Light Turned ON";
+    } 
+    else if (query == "light off") {
+        digitalWrite(LIGHT, 0);
+        return "Done: Light Turned OFF";
+    } 
+    else if (query == "light status") {
+        return digitalRead(LIGHT) ? "LIGHT is OFF" : "LIGHT is ON";
+    } 
+    else {
+        return "Your query was invalid..";
+    }
+}
+
+// Bucle principal
+void loop() {
+    Blynk.run();
+    thing.Handle();
+}
+</pre>
+        </div>
+        <button onclick="window.location.href='proyectos.html'" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: #00ffcc; color: #121212; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">Volver a Proyectos</button>
+        <footer>
+            <p>&copy; 2024 Yassir Hicham - Proyecto Radar</p>
+        </footer>
+    </div>
+</body>
+</html>
