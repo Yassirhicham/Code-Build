@@ -3,98 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Detección - Proyecto Arduino</title>
+    <title>Radar de Detección | Code-Build</title>
+    <!-- Fuentes y librerías -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        :root {
+            --primary: #00ffcc;
+            --secondary: #0084ff;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #e0e0e0;
+            --gray: #333333;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: #ffffff;
-            text-align: center;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
         }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a, #000000);
+            line-height: 1.6;
+        }
+        
+        /* Fondo de partículas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        
         .container {
-            width: 90%;
             max-width: 1000px;
-            margin: auto;
-            background: #1e1e1e;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.3);
+            margin: 40px auto;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            overflow: hidden;
         }
+        
         header {
-            background: linear-gradient(135deg, #00ffcc, #007777);
-            color: #ffffff;
-            padding: 30px;
-            border-radius: 12px 12px 0 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         header h1 {
-            margin: 0;
-            font-size: 28px;
-            letter-spacing: 1.5px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
         }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+        }
+        
         .content {
-            text-align: left;
+            padding: 30px;
         }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 30px 0 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+            background: rgba(0, 255, 200, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .image-card {
+            flex: 1 1 300px;
+            max-width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 200, 0.1);
+        }
+        
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 255, 200, 0.3);
+        }
+        
         .image {
             width: 100%;
-            max-width: 500px;
             height: auto;
-            border-radius: 8px;
-            margin: 20px 0;
-            box-shadow: 0px 0px 10px rgba(0, 255, 204, 0.5);
-            transition: transform 0.3s ease;
+            display: block;
         }
-        .image:hover {
-            transform: scale(1.05);
+        
+        .image-caption {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--light);
         }
+        
         pre {
             background: #000;
-            color: #00ffcc;
+            color: var(--primary);
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.5);
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+            border-left: 3px solid var(--primary);
+            margin: 30px 0;
+            position: relative;
         }
-        footer {
-            background: linear-gradient(135deg, #1e1e1e, #1e1e1e);
-            color: #ffffff;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 0 0 12px 12px;
-        }
-        .highlight {
-            color: #00ffcc;
+        
+        pre::before {
+            content: 'Código Arduino';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #000;
+            color: var(--primary);
+            padding: 0 10px;
+            font-size: 0.8rem;
             font-weight: bold;
+        }
+        
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .spec-card {
+            background: rgba(0, 132, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .spec-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spec-card i {
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 200, 0.4);
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--light);
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                border-radius: 0;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Radar de Detección - Proyecto Arduino</h1>
+    <!-- Fondo de partículas -->
+    <div id="particles-js"></div>
+    
+    <div class="container" data-aos="fade-up">
+        <header data-aos="fade-down">
+            <h1>Radar de Detección con Arduino</h1>
+            <p>Sistema de escaneo ultrasónico con visualización en tiempo real</p>
         </header>
+        
         <div class="content">
-            <h2>🔍 Introducción</h2>
-            <p>Este innovador proyecto consiste en la implementación de un <span class="highlight">radar de detección</span> utilizando un sensor ultrasónico, un servo motor y una placa Arduino. 
-            Gracias a este sistema, es posible escanear un área y detectar la presencia de objetos cercanos en tiempo real. Su aplicación se extiende desde <span class="highlight">sistemas de seguridad</span> hasta <span class="highlight">robótica autónoma</span>.</p>
+            <section data-aos="fade-up">
+                <h2><i class="fas fa-search"></i> Introducción</h2>
+                <p>Este innovador proyecto consiste en la implementación de un <span class="highlight">radar de detección</span> utilizando un sensor ultrasónico, un servo motor y una placa Arduino. Gracias a este sistema, es posible escanear un área y detectar la presencia de objetos cercanos en tiempo real.</p>
+                <p>Su aplicación se extiende desde <span class="highlight">sistemas de seguridad</span> hasta <span class="highlight">robótica autónoma</span>, ofreciendo una solución accesible y versátil para detección de proximidad.</p>
+            </section>
             
-            <h2>⚙️ Implementación</h2>
-            <p>El radar está compuesto por un <span class="highlight">sensor ultrasónico HC-SR04</span> montado sobre un servo motor, que se mueve de 15° a 165° para cubrir un amplio campo de visión. 
-            La placa Arduino procesa los datos y los transmite para su <span class="highlight">visualización en tiempo real</span>, permitiendo detectar objetos con gran precisión.</p>
-            <img src="Fotos/646fa5174758a.png" alt="Imagen del Circuito" class="image">
+            <section data-aos="fade-up" data-aos-delay="100">
+                <h2><i class="fas fa-cogs"></i> Implementación Técnica</h2>
+                <p>El radar está compuesto por un <span class="highlight">sensor ultrasónico HC-SR04</span> montado sobre un servo motor, que se mueve de 15° a 165° para cubrir un amplio campo de visión. La placa Arduino procesa los datos y los transmite para su <span class="highlight">visualización en tiempo real</span>, permitiendo detectar objetos con gran precisión.</p>
+                
+                <div class="tech-specs">
+                    <div class="spec-card" data-aos="zoom-in" data-aos-delay="200">
+                        <h3><i class="fas fa-microchip"></i> Componentes Principales</h3>
+                        <ul>
+                            <li>Arduino UNO</li>
+                            <li>Sensor HC-SR04</li>
+                            <li>Servo Motor SG90</li>
+                            <li>Protoboard</li>
+                            <li>Cables jumper</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card" data-aos="zoom-in" data-aos-delay="300">
+                        <h3><i class="fas fa-tachometer-alt"></i> Especificaciones</h3>
+                        <ul>
+                            <li>Ángulo de escaneo: 150°</li>
+                            <li>Distancia máxima: 4m</li>
+                            <li>Precisión: ±3mm</li>
+                            <li>Tiempo de respuesta: 30ms</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card" data-aos="zoom-in" data-aos-delay="400">
+                        <h3><i class="fas fa-project-diagram"></i> Aplicaciones</h3>
+                        <ul>
+                            <li>Seguridad perimetral</li>
+                            <li>Robótica autónoma</li>
+                            <li>Estacionamiento inteligente</li>
+                            <li>Monitorización industrial</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="image-container">
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="Fotos/646fa5174758a.png" alt="Diagrama del circuito" class="image" onerror="this.src='https://via.placeholder.com/500x300/1a1a1a/00ffcc?text=Circuito+Radar'">
+                        <div class="image-caption">Diagrama del circuito del radar</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="Fotos/radar-arduino.png" alt="Visualización de resultados" class="image" onerror="this.src='https://via.placeholder.com/500x300/1a1a1a/00ffcc?text=Visualización+Radar'">
+                        <div class="image-caption">Visualización de los datos del radar</div>
+                    </div>
+                </div>
+            </section>
             
-            <h2>📊 Resultados</h2>
-            <p>El sistema es capaz de identificar objetos a diferentes distancias y representarlos en un gráfico en tiempo real. 
-            Gracias a su precisión, puede utilizarse en <span class="highlight">vehículos autónomos</span>, <span class="highlight">sistemas de seguridad</span> y <span class="highlight">monitoreo industrial</span>. 
-            Además, es posible configurar alertas cuando un objeto se encuentra en una zona crítica.</p>
-            <img src="Fotos/radar-arduino.png" alt="Imagen de Resultados" class="image">
+            <section data-aos="fade-up" data-aos-delay="200">
+                <h2><i class="fas fa-chart-line"></i> Resultados</h2>
+                <p>El sistema es capaz de identificar objetos a diferentes distancias y representarlos en un gráfico en tiempo real. Gracias a su precisión, puede utilizarse en <span class="highlight">vehículos autónomos</span>, <span class="highlight">sistemas de seguridad</span> y <span class="highlight">monitoreo industrial</span>.</p>
+                <p>Además, es posible configurar alertas cuando un objeto se encuentra en una zona crítica, lo que lo hace ideal para aplicaciones de seguridad y prevención de colisiones.</p>
+            </section>
             
-            <h2>💻 Código Arduino</h2>
-            <pre>
+            <section data-aos="fade-up" data-aos-delay="300">
+                <h2><i class="fas fa-code"></i> Implementación Software</h2>
+                <p>El código Arduino procesa las señales del sensor ultrasónico, controla el movimiento del servo motor y envía los datos para su visualización. A continuación se muestra el núcleo del sistema:</p>
+                
+                <pre>
 // Incluye la librería del Servo
-#include <Servo.h>
+#include &lt;Servo.h&gt;
 
 const int trigPin = 10;
 const int echoPin = 11;
@@ -110,6 +359,7 @@ void setup() {
 }
 
 void loop() {
+    // Escaneo de izquierda a derecha
     for(int i = 15; i <= 165; i++) {  
         myServo.write(i);
         delay(30);
@@ -119,6 +369,8 @@ void loop() {
         Serial.print(distance);
         Serial.print(".");
     }
+    
+    // Escaneo de derecha a izquierda
     for(int i = 165; i > 15; i--) {  
         myServo.write(i);
         delay(30);
@@ -130,6 +382,7 @@ void loop() {
     }
 }
 
+// Función para calcular distancia
 int calculateDistance() { 
     digitalWrite(trigPin, LOW); 
     delayMicroseconds(2);
@@ -139,13 +392,50 @@ int calculateDistance() {
     duration = pulseIn(echoPin, HIGH);
     distance = duration * 0.034 / 2;
     return distance;
-}
-            </pre>
+}</pre>
+            </section>
+            
+            <div style="text-align: center;">
+                <button onclick="window.location.href='proyectos.html'" class="btn" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fas fa-arrow-left"></i> Volver a Proyectos
+                </button>
+            </div>
         </div>
-        <button onclick="window.location.href='proyectos.html'" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: #00ffcc; color: #121212; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">Volver a Proyectos</button>
-        <footer>
-            <p>&copy; 2024 Yassir Hicham - Proyecto Radar</p>
+        
+        <footer data-aos="fade-up" data-aos-delay="500">
+            <p>&copy; 2024 Yassir Hicham | Code-Build - Proyecto Radar</p>
         </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializar AOS (animaciones)
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Configuración de particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00ffc8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00ffc8", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
