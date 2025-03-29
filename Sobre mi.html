@@ -3,31 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Mí</title>
+    <title>Sobre Mí | Code-Build</title>
+    <!-- Fuentes y librerías -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        body { text-align: center; background: #121212; color: white; font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: auto; padding: 20px; }
-        a { color: lightblue; text-decoration: none; display: block; margin: 10px; }
-        .btn { background: #333; padding: 10px; border-radius: 5px; display: inline-block; }
-        .btn:hover { background: #555; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: white;
+            min-height: 100vh;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a, #000000);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Fondo de partículas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 200, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #00ffc8, #0084ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(0, 255, 200, 0.3);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+        }
+        
+        .about-content {
+            margin-bottom: 30px;
+        }
+        
+        .about-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+        }
+        
+        .highlight {
+            background: rgba(0, 255, 200, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #00ffc8;
+            font-weight: 600;
+        }
+        
+        .skills-section {
+            margin: 40px 0;
+        }
+        
+        .skills-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #00ffc8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .skills-title::before {
+            content: '▹';
+            color: #0084ff;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .skill-item {
+            background: rgba(0, 132, 255, 0.1);
+            padding: 12px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 3px solid #00ffc8;
+        }
+        
+        .skill-icon {
+            font-size: 1.2rem;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: rgba(0, 255, 200, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            font-weight: 600;
+        }
+        
+        .back-btn:hover {
+            background: rgba(0, 255, 200, 0.2);
+            transform: translateX(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 200, 0.2);
+        }
+        
+        .back-btn::before {
+            content: '←';
+            margin-right: 8px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin: 20px auto;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>Sobre Mí</h1>
-
-        <p>¡Hola! Soy <strong>Yassir</strong>, un apasionado de la tecnología, la programación y las telecomunicaciones. Actualmente estoy en mi último año de <strong>Ingeniería en Sistemas y Servicios de Telecomunicaciones</strong>, y siempre busco nuevos retos y proyectos que me ayuden a mejorar mis habilidades.</p>
-
-        <p>Tengo una gran experiencia en <strong>programación en C</strong>, donde he conseguido una <strong>Matrícula de Honor</strong>, y también ofrezco <strong>clases particulares</strong> de C, matemáticas y VHDL. Además, me gusta trabajar en proyectos personales, como el desarrollo de una web donde compartir mis mini proyectos o un MVP innovador relacionado con el sector inmobiliario.</p>
-
-        <p>Ahora mismo, estoy explorando el mundo del desarrollo web con GitHub Pages, creando una plataforma donde puedo mostrar mis proyectos y facilitar el acceso a mis trabajos.</p>
-
-        <p>Si quieres saber más sobre mí o colaborar en algún proyecto, ¡no dudes en ponerte en contacto! 🚀</p>
-
-
-        <a href="index.html">⬅️ Volver al inicio</a>
+    <!-- Fondo de partículas -->
+    <div id="particles-js"></div>
+    
+    <div class="container" data-aos="fade-up">
+        <h1 data-aos="fade-up">Sobre Mí</h1>
+        
+        <div class="profile-section" data-aos="fade-up" data-aos-delay="100">
+            <!-- Reemplaza con tu foto de perfil -->
+            <img src="Fotos/profile.jpg" alt="Yassir" class="profile-pic" onerror="this.src='https://via.placeholder.com/150'">
+        </div>
+        
+        <div class="about-content">
+            <p data-aos="fade-up" data-aos-delay="200">
+                ¡Hola! Soy <span class="highlight">Yassir</span>, un apasionado de la tecnología, la programación y las telecomunicaciones. Actualmente estoy en mi último año de <span class="highlight">Ingeniería en Sistemas y Servicios de Telecomunicaciones</span>, y siempre busco nuevos retos y proyectos que me ayuden a mejorar mis habilidades.
+            </p>
+            
+            <p data-aos="fade-up" data-aos-delay="250">
+                Tengo una gran experiencia en <span class="highlight">programación en C</span>, donde he conseguido una <span class="highlight">Matrícula de Honor</span>, y también ofrezco <span class="highlight">clases particulares</span> de C, matemáticas y VHDL. Además, me gusta trabajar en proyectos personales, como el desarrollo de una web donde compartir mis mini proyectos o un MVP innovador relacionado con el sector inmobiliario.
+            </p>
+            
+            <p data-aos="fade-up" data-aos-delay="300">
+                Ahora mismo, estoy explorando el mundo del <span class="highlight">desarrollo web</span> con GitHub Pages, creando una plataforma donde puedo mostrar mis proyectos y facilitar el acceso a mis trabajos.
+            </p>
+            
+            <p data-aos="fade-up" data-aos-delay="350">
+                Si quieres saber más sobre mí o colaborar en algún proyecto, ¡no dudes en ponerte en contacto! <span style="font-size: 1.2rem;">🚀</span>
+            </p>
+        </div>
+        
+        <div class="skills-section" data-aos="fade-up" data-aos-delay="400">
+            <h3 class="skills-title">Habilidades y Tecnologías</h3>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <span class="skill-icon">💻</span>
+                    <span>Programación en C</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-icon">📶</span>
+                    <span>Telecomunicaciones</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-icon">🧮</span>
+                    <span>Matemáticas Avanzadas</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-icon">🔌</span>
+                    <span>VHDL</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-icon">🌐</span>
+                    <span>Desarrollo Web</span>
+                </div>
+                <div class="skill-item">
+                    <span class="skill-icon">📊</span>
+                    <span>MVP Development</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="index.html" class="back-btn">Volver al inicio</a>
+        </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializar AOS (animaciones)
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Configuración de particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00ffc8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00ffc8", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
