@@ -3,226 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IoT based Home Automation - Proyecto Arduino</title>
+    <title>Automatización Doméstica IoT | Code-Build</title>
+    <!-- Fuentes y librerías -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        :root {
+            --primary: #00ffcc;
+            --secondary: #0084ff;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #e0e0e0;
+            --gray: #333333;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: #ffffff;
-            text-align: center;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
         }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a, #000000);
+            line-height: 1.6;
+        }
+        
+        /* Fondo de partículas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        
         .container {
-            width: 90%;
             max-width: 1000px;
-            margin: auto;
-            background: #1e1e1e;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.3);
+            margin: 40px auto;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            overflow: hidden;
         }
-        .contenedor {
-            text-align: center; /* Centra las imágenes */
-        }
-        .contenedor img {
-            width: 200px; /* Ajusta el tamaño según necesites */
-            margin: 10px;
-            display: inline-block;
-        }
+        
         header {
-            background: linear-gradient(135deg, #00ffcc, #007777);
-            color: #ffffff;
-            padding: 30px;
-            border-radius: 12px 12px 0 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         header h1 {
-            margin: 0;
-            font-size: 28px;
-            letter-spacing: 1.5px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
         }
+        
         .content {
-            text-align: left;
+            padding: 30px;
         }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3 i {
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+            background: rgba(0, 255, 200, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .image-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 200, 0.1);
+        }
+        
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 255, 200, 0.3);
+        }
+        
         .image {
             width: 100%;
-            max-width: 500px;
             height: auto;
-            border-radius: 8px;
-            margin: 20px 0;
-            box-shadow: 0px 0px 10px rgba(0, 255, 204, 0.5);
-            transition: transform 0.3s ease;
+            display: block;
         }
-        .image:hover {
-            transform: scale(1.05);
+        
+        .image-caption {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--light);
         }
+        
         pre {
             background: #000;
-            color: #00ffcc;
+            color: var(--primary);
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.5);
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+            border-left: 3px solid var(--primary);
+            margin: 30px 0;
+            position: relative;
         }
-        footer {
-            background: linear-gradient(135deg, #1e1e1e, #1e1e1e);
-            color: #ffffff;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 0 0 12px 12px;
-        }
-        .highlight {
-            color: #00ffcc;
+        
+        pre::before {
+            content: 'Código Arduino';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #000;
+            color: var(--primary);
+            padding: 0 10px;
+            font-size: 0.8rem;
             font-weight: bold;
+        }
+        
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        li::before {
+            content: '▹';
+            position: absolute;
+            left: -20px;
+            color: var(--primary);
+        }
+        
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .spec-card {
+            background: rgba(0, 132, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .spec-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spec-card i {
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 200, 0.4);
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--light);
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                border-radius: 0;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>IoT based Home Automation - Proyecto Arduino</h1>
+    <!-- Fondo de partículas -->
+    <div id="particles-js"></div>
+    
+    <div class="container" data-aos="fade-up">
+        <header data-aos="fade-down">
+            <h1>Automatización Doméstica IoT con ESP32</h1>
+            <p>Control inteligente de dispositivos mediante Blynk y comandos de voz</p>
         </header>
+        
         <div class="content">
-            <h2>🔍 Introducción</h2>
-            <p>En este proyecto con la placa ESP32, mi compañera Iris y yo hemos mostrado cómo realizar una Automatización Domótica IoT, implementando un código en Arduino que estará vinculado a una aplicación.
-
-                Esta aplicación, llamada Blynk, nos permitirá controlar manualmente, tanto desde fuera de casa como desde dentro, los dispositivos conectados a Internet que se encuentren en el hogar.
-                
-                Por último, con la ayuda del Asistente de Google y una plataforma, este control también se podrá realizar mediante comandos de voz.</p>
+            <section data-aos="fade-up">
+                <h2><i class="fas fa-home"></i> Introducción</h2>
+                <p>En este proyecto con la placa <span class="highlight">ESP32</span>, hemos desarrollado un sistema de automatización doméstica IoT, implementando un código en Arduino que se vincula a una aplicación móvil.</p>
+                <p>La aplicación <span class="highlight">Blynk</span> nos permite controlar manualmente, tanto desde fuera de casa como desde dentro, los dispositivos conectados a Internet. Además, con la ayuda del <span class="highlight">Asistente de Google</span> y la plataforma ThingESP, este control también se puede realizar mediante comandos de voz.</p>
+            </section>
             
-            <h2>⚙️ Implementación</h2>
-            <p>En este apartado se explicará el funcionamiento del proyecto, así como el código Arduino implementado y también las aplicaciones utilizadas.</p>
-            <h3>Objetivos del Proyecto</h3>
-            <p>El principal objetivo es optimizar el consumo o funcionamiento de los dispositivos domésticos.
-
-                Es un proyecto que podría aplicarse a diversos aparatos que encontramos en nuestro hogar, pero para simplificarlo, lo llevaré a cabo con un elemento básico.
+            <section data-aos="fade-up" data-aos-delay="100">
+                <h2><i class="fas fa-cogs"></i> Implementación Técnica</h2>
                 
-                Para mostrar de forma sencilla y breve los conceptos fundamentales, he adaptado este proyecto a una luz, es decir, automatizaré el consumo y el funcionamiento de una luz utilizando la placa ESP32 y una aplicación que me permitirá encenderla o apagarla de forma remota, en caso de que, por ejemplo, me la haya dejado encendida.</p>
-             <h3>Material utilizado</h3>   
-             <div class="contenedor">
-                <img src="Fotos/ESP32.png" alt="Imagen de Esp 32" class="image">
-                <img src="Fotos/Rele.png" alt="Imagen del Rele" class="image">
-                <img src="Fotos/Luz.png" alt="Imagen de la luz" class="image">
-                <img src="Fotos/Adaptador.png" alt="Imagen del adaptador" class="image">
-            </div>
-            <h3>Montaje</h3>
-            <div class="contenedor">
-                <img src="Fotos/montaje.png" alt="Imagen del montaje1" class="image">
-                <img src="Fotos/montaje1.png" alt="Imagen del montaje2" class="image">
-                <img src="Fotos/montaje2.png" alt="Imagen del montaje3" class="image">
-            </div>
-           <h3>Conexiones</h3>
-           <p>El relé se conecta a la placa ESP32 mediante tres pines:</p>
-            <ul>
-                <li>El primer pin ‘S’ se conecta a la salida digital ‘D2’.</li>
-                <li>El pin ‘+’ se conecta a ‘VCC 5V’.</li>
-                <li>Por último, el pin ‘-’ se conecta a ‘GND’.</li>
-            </ul>
-            <p>S: Señal </p>
-            <p>+: positivo</p>
-            <p>-: negativo</p>
-
-            <h3>Aplicación Blynk</h3>
-            <p>Esta aplicación puede gestionar dispositivos IoT, y en mi caso, gestiona el estado de la luz.
-
-                Esta gestión es muy sencilla, ya que dentro de la aplicación podemos tener registrados varios dispositivos.
+                <h3><i class="fas fa-bullseye"></i> Objetivos del Proyecto</h3>
+                <p>El principal objetivo es <span class="highlight">optimizar el consumo y funcionamiento</span> de los dispositivos domésticos mediante control remoto. Como demostración, hemos automatizado el control de una luz utilizando la placa ESP32, permitiendo:</p>
+                <ul>
+                    <li>Encendido/apagado remoto desde cualquier ubicación</li>
+                    <li>Control por voz mediante Asistente de Google</li>
+                    <li>Monitorización del estado en tiempo real</li>
+                </ul>
                 
-                Para poder vincular la luz con Blynk, necesitamos que la propia aplicación nos proporcione el ‘Token’ y el ‘ID’. Esto se nos proporciona una vez nos hemos registrado.
-            </p>
-            <img src="Fotos/Web.png" alt="Imagen de la web" class="image"> 
+                <h3><i class="fas fa-tools"></i> Material Utilizado</h3>
+                <div class="image-gallery">
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="Fotos/ESP32.png" alt="Placa ESP32" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=ESP32'">
+                        <div class="image-caption">Placa ESP32</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="250">
+                        <img src="Fotos/Rele.png" alt="Módulo Relé" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Módulo+Relé'">
+                        <div class="image-caption">Módulo Relé</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="Fotos/Luz.png" alt="Luz controlada" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Luz+Controlada'">
+                        <div class="image-caption">Luz controlada</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="350">
+                        <img src="Fotos/Adaptador.png" alt="Adaptador de alimentación" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Adaptador'">
+                        <div class="image-caption">Adaptador de alimentación</div>
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-project-diagram"></i> Montaje del Circuito</h3>
+                <div class="image-gallery">
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="Fotos/montaje.png" alt="Montaje 1" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Montaje+1'">
+                        <div class="image-caption">Vista general del montaje</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="250">
+                        <img src="Fotos/montaje1.png" alt="Montaje 2" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Montaje+2'">
+                        <div class="image-caption">Conexión ESP32-Relé</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="Fotos/montaje2.png" alt="Montaje 3" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Montaje+3'">
+                        <div class="image-caption">Conexión Relé-Luz</div>
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-plug"></i> Conexiones</h3>
+                <div class="tech-specs">
+                    <div class="spec-card" data-aos="fade-up" data-aos-delay="200">
+                        <h4><i class="fas fa-microchip"></i> Relé a ESP32</h4>
+                        <ul>
+                            <li><strong>S</strong> (Señal) → <strong>D2</strong></li>
+                            <li><strong>+</strong> (Positivo) → <strong>5V</strong></li>
+                            <li><strong>-</strong> (Negativo) → <strong>GND</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-mobile-alt"></i> Aplicación Blynk</h3>
+                <p>Blynk permite gestionar dispositivos IoT mediante una interfaz intuitiva. Para vincular nuestro dispositivo necesitamos:</p>
+                <div class="image-gallery">
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="Fotos/Web.png" alt="Interfaz Blynk" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Interfaz+Blynk'">
+                        <div class="image-caption">Interfaz de control en Blynk</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="250">
+                        <img src="Fotos/Web1.png" alt="Configuración Blynk" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Config+Blynk'">
+                        <div class="image-caption">Configuración del dispositivo</div>
+                    </div>
+                </div>
+                
+                <h4>Parámetros de configuración</h4>
+                <pre>
+#define BLYNK_TEMPLATE_ID "TMPL5ionyk6pQ"
+#define BLYNK_TEMPLATE_NAME "llum"
+#define BLYNK_AUTH_TOKEN "kqqOw3dEBnwSb3FEHjBbHsKYawXy9RMv"</pre>
+                
+                <h4>Función de control</h4>
+                <pre>
+BLYNK_WRITE(V2) {
+    digitalWrite(V2, param.asInt());
+}</pre>
+                <p>Esta función se invoca cada vez que se recibe un comando desde la aplicación Blynk, donde V2 identifica nuestro interruptor virtual.</p>
+                
+                <h4>Conexión con Blynk</h4>
+                <pre>Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);</pre>
+                <p>Establece la conexión con el servidor en la nube de Blynk usando el puerto HTTP estándar (80).</p>
+                
+                <h3><i class="fas fa-robot"></i> Integración con ThingESP</h3>
+                <pre>ThingESP32 thing("yassirhicham", "ControlEsp32", "ProjectYassir");</pre>
+                <p>Esta configuración permite el control por voz a través de WhatsApp utilizando Twilio, generando un bot que responde a comandos específicos.</p>
+            </section>
             
-            <h3>Parámetros proporcionados</h3>
-            <p>Para enlazar la luz, se define el ID y el Token:</p>
-            <pre>
-                #define BLYNK_TEMPLATE_ID "TMPL5ionyk6pQ"
-                #define BLYNK_TEMPLATE_NAME "llum"
-                #define BLYNK_AUTH_TOKEN "kqqOw3dEBnwSb3FEHjBbHsKYawXy9RMv"
-            </pre>
-            <p>Función BLYNK_WRITE</p>
-            <pre>
-                BLYNK_WRITE(V2){
-                    digitalWrite(V2, param.asInt());
-                }
-            </pre>
-            <p>Esta función la proporciona la propia biblioteca de Blynk y se invoca cada vez que se recibe un dato desde el dispositivo vinculado con la aplicación. En este caso, la luz se identifica como V2.
-
-            </p>
-            <p>Conexión con Blynk</p>
-            <pre>
-                Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-            </pre>
-            <p>En esta línea de código se inicia la comunicación con el servidor. Donde ‘blynk.cloud’ es la dirección del servidor en la nube de Blynk, y ‘80’ es el puerto para el protocolo HTTP.</p>
-            <img src="Fotos/Web1.png" alt="Imagen de la web" class="image"> 
-            <p>Plataforma Twilio i ThingESP:</p>   
-            <pre>ThingESP32 thing("iriscruz", "ControlEsp32", "ProjectIris");</pre> 
-            <p>Por último, con esta línea de comandos podemos conectarnos a la plataforma en la nube ThingESP, donde, a través de un enlace que se generará, podremos utilizar un ‘bot’ (llamado Twilio) a través de WhatsApp, es decir, un contacto que podremos controlar con nuestra voz.</p>
-
-
-            <h2>📊 Resultados</h2>
-            <p>En este apartado del informe veremos los resultados de cómo se puede controlar la luz tanto a través de la aplicación Blynk como con el Asistente de Google.</p>
-            <h3>- Control de la luz mediante Blynk</h3>
-            <p>Quan la llum està encesa veiem a la placa ESP32 una led de color blau, aquesta
-                ens confirma que estem emeten llum.
-            </p>
-            <div class="contenedor">
-                <img src="Fotos/Resultados.png" alt="Imagen del resultado" class="image">
-                <img src="Fotos/resultados1.png" alt="Imagen del resultado2" class="image">
-            </div>
-
-            <p> Control de la luz mediante el Assistente de Google</p>
-            <div class="contenedor">
-                <img src="Fotos/resultados2.png" alt="Imagen del resultado" class="image">
-                <img src="Fotos/resultados3.png" alt="Imagen del resultado2" class="image">
-                <img src="Fotos/resultados4.png" alt="Imagen del resultado2" class="image">
-            </div>
-
+            <section data-aos="fade-up" data-aos-delay="200">
+                <h2><i class="fas fa-chart-line"></i> Resultados</h2>
+                
+                <h3><i class="fas fa-mobile-alt"></i> Control mediante Blynk</h3>
+                <p>Cuando la luz está encendida, un LED azul en la placa ESP32 confirma el estado activo.</p>
+                <div class="image-gallery">
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="Fotos/Resultados.png" alt="Luz encendida" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Luz+ON'">
+                        <div class="image-caption">Estado encendido (LED azul activo)</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="250">
+                        <img src="Fotos/resultados1.png" alt="Interfaz Blynk" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=App+Blynk'">
+                        <div class="image-caption">Control desde la aplicación</div>
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-microphone-alt"></i> Control por voz</h3>
+                <p>Integración con Asistente de Google mediante Twilio y ThingESP:</p>
+                <div class="image-gallery">
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="Fotos/resultados2.png" alt="Comando de voz" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Comando+Voz'">
+                        <div class="image-caption">Activación por comando</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="250">
+                        <img src="Fotos/resultados3.png" alt="Respuesta del sistema" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Respuesta'">
+                        <div class="image-caption">Confirmación del sistema</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="300">
+                        <img src="Fotos/resultados4.png" alt="Estado actual" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Estado'">
+                        <div class="image-caption">Consulta del estado</div>
+                    </div>
+                </div>
+            </section>
             
-            <h2>💻 Código Arduino</h2>
-<pre>            
-// Incluye la librería del Servo
+            <section data-aos="fade-up" data-aos-delay="300">
+                <h2><i class="fas fa-code"></i> Código Completo</h2>
+                <pre>
+// Configuración Blynk
 #define BLYNK_PRINT Serial
 #define BLYNK_TEMPLATE_ID "TMPL5ionyk6pQ"
 #define BLYNK_TEMPLATE_NAME "llum"
 #define BLYNK_AUTH_TOKEN "kqqOw3dEBnwSb3FEHjBbHsKYawXy9RMv"
 
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <BlynkSimpleEsp32.h>
-#include <ThingESP.h>
+#include &lt;WiFi.h&gt;
+#include &lt;WiFiClient.h&gt;
+#include &lt;BlynkSimpleEsp32.h&gt;
+#include &lt;ThingESP.h&gt;
 
-// Configuración de ThingESP
+// Configuración ThingESP
 ThingESP32 thing("yassirhicham", "ControlEsp32", "ProjectYassir");
 
-// Definición de pines y variables
+// Definición de pines
 int LIGHT = 2;
 unsigned long previousMillis = 0;
 const long INTERVAL = 6000;
 
-// Credenciales de conexión
+// Credenciales WiFi
 char auth[] = BLYNK_AUTH_TOKEN;
 char ssid[] = "wifi_iris";
 char pass[] = "holacomoestas";
 
-// Función para manejar el pin virtual V2 con Blynk
+// Función Blynk para control
 BLYNK_WRITE(V2) {
     digitalWrite(V2, param.asInt());
 }
 
-// Configuración inicial
+// Setup inicial
 void setup() {
     pinMode(LIGHT, OUTPUT);
     pinMode(V2, OUTPUT);
 
-    // Conectar a Blynk
+    // Iniciar Blynk
     Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
 
-    // Conectar a ThingESP
+    // Iniciar ThingESP
     thing.SetWiFi(ssid, pass);
     thing.initDevice();
 }
 
-// Función para manejar respuestas a comandos en ThingESP
+// Manejo de comandos por voz
 String HandleResponse(String query) {
     if (query == "light on") {
         digitalWrite(LIGHT, 1);
@@ -244,13 +504,50 @@ String HandleResponse(String query) {
 void loop() {
     Blynk.run();
     thing.Handle();
-}
-</pre>
+}</pre>
+            </section>
+            
+            <div style="text-align: center;">
+                <button onclick="window.location.href='proyectos.html'" class="btn" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fas fa-arrow-left"></i> Volver a Proyectos
+                </button>
+            </div>
         </div>
-        <button onclick="window.location.href='proyectos.html'" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: #00ffcc; color: #121212; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">Volver a Proyectos</button>
-        <footer>
-            <p>&copy; 2024 Yassir Hicham - Proyecto Radar</p>
+        
+        <footer data-aos="fade-up" data-aos-delay="500">
+            <p>&copy; 2024 Yassir Hicham | Code-Build - Proyecto IoT Home Automation</p>
         </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializar AOS (animaciones)
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Configuración de particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00ffc8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00ffc8", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
