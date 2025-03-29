@@ -3,30 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Proyectos</title>
+    <title>Mis Proyectos | Code-Build</title>
+    <!-- Fuentes y librerías -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        body { text-align: center; background: #121212; color: white; font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: auto; padding: 20px; }
-        a { color: lightblue; text-decoration: none; display: block; margin: 10px; }
-        .btn { background: #333; padding: 10px; border-radius: 5px; display: inline-block; }
-        .btn:hover { background: #555; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: white;
+            min-height: 100vh;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a, #000000);
+            padding: 20px;
+        }
+        
+        /* Fondo de partículas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 200, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #00ffc8, #0084ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+        
+        p.subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            color: #aaa;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .project-card {
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.05), rgba(0, 132, 255, 0.05));
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid rgba(0, 255, 200, 0.1);
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 200, 0.2);
+            border-color: rgba(0, 255, 200, 0.3);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #00ffc8, #0084ff);
+        }
+        
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #00ffc8;
+        }
+        
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .project-description {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            color: #00ffc8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .project-link:hover {
+            color: #0084ff;
+        }
+        
+        .project-link::after {
+            content: '→';
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .project-link:hover::after {
+            transform: translateX(3px);
+        }
+        
+        .coming-soon {
+            opacity: 0.7;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(0, 255, 200, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 255, 200, 0.2);
+        }
+        
+        .back-btn:hover {
+            background: rgba(0, 255, 200, 0.2);
+            transform: translateX(-3px);
+        }
+        
+        .back-btn::before {
+            content: '←';
+            margin-right: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>Mis Proyectos</h1>
-        <p>Aquí puedes ver todos mis proyectos.</p>
-
-        <ul>
-            <li><a class="btn" href="Radar Project.html">📡 Proyecto Radar</a></li>
-            <li><a class="btn" href="Smart_Fridge.html">🔧 Proyecto Smart Fridge</a></li>
-            <li><a class="btn" href="IoT based Home Automation.html">🔧 Proyecto IoT based Home Automation</a></li>
-            <li><a class="btn" href="#">💡 Stay tuned for our upcoming project.</a></li>
-        </ul>
-
-        <a href="index.html">⬅️ Volver al inicio</a>
+    <!-- Fondo de partículas -->
+    <div id="particles-js"></div>
+    
+    <div class="container" data-aos="fade-up">
+        <h1 data-aos="fade-up">Mis Proyectos</h1>
+        <p class="subtitle" data-aos="fade-up" data-aos-delay="100">Explora mis creaciones tecnológicas</p>
+        
+        <div class="projects-grid">
+            <!-- Proyecto 1 -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="project-icon">📡</div>
+                <h3 class="project-title">Proyecto Radar</h3>
+                <p class="project-description">Sistema de detección por radar con visualización en tiempo real y alertas personalizables.</p>
+                <a href="Radar Project.html" class="project-link">Ver detalles</a>
+            </div>
+            
+            <!-- Proyecto 2 -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="project-icon">❄️</div>
+                <h3 class="project-title">Smart Fridge</h3>
+                <p class="project-description">Nevera inteligente con control de inventario, seguimiento de caducidad y sugerencias de recetas.</p>
+                <a href="Smart_Fridge.html" class="project-link">Ver detalles</a>
+            </div>
+            
+            <!-- Proyecto 3 -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="project-icon">🏠</div>
+                <h3 class="project-title">Home Automation</h3>
+                <p class="project-description">Sistema IoT para automatización del hogar con control remoto y escenas personalizadas.</p>
+                <a href="IoT based Home Automation.html" class="project-link">Ver detalles</a>
+            </div>
+            
+            <!-- Proyecto próximo -->
+            <div class="project-card coming-soon" data-aos="fade-up" data-aos-delay="500">
+                <div class="project-icon">💡</div>
+                <h3 class="project-title">Próximo Proyecto</h3>
+                <p class="project-description">¡Trabajando en algo increíble! Pronto más información.</p>
+                <span class="project-link">Próximamente</span>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">Volver al inicio</a>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializar AOS (animaciones)
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Configuración de particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00ffc8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00ffc8", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
