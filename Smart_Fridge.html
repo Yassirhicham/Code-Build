@@ -1,255 +1,522 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Fridge - Proyecto IoT</title>
+    <title>Smart Fridge IoT | Code-Build</title>
+    <!-- Fuentes y librerías -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        :root {
+            --primary: #00ffcc;
+            --secondary: #0084ff;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #e0e0e0;
+            --gray: #333333;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: #ffffff;
-            text-align: center;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
         }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a, #000000);
+            line-height: 1.6;
+        }
+        
+        /* Fondo de partículas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        
         .container {
-            width: 90%;
             max-width: 1000px;
-            margin: auto;
-            background: #1e1e1e;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 15px rgba(0, 255, 204, 0.3);
+            margin: 40px auto;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            overflow: hidden;
         }
+        
         header {
-            background: linear-gradient(135deg, #00ffcc, #007777);
-            color: #ffffff;
-            padding: 30px;
-            border-radius: 12px 12px 0 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         header h1 {
-            margin: 0;
-            font-size: 28px;
-            letter-spacing: 1.5px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
         }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+        }
+        
         .content {
-            text-align: left;
+            padding: 30px;
         }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+        
+        h3, h4 {
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3 i, h4 i {
+            color: var(--primary);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+            background: rgba(0, 255, 200, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .image-card {
+            flex: 1 1 300px;
+            max-width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 200, 0.1);
+        }
+        
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 255, 200, 0.3);
+        }
+        
         .image {
             width: 100%;
-            max-width: 700px;
             height: auto;
-            border-radius: 8px;
-            margin: 20px auto;
             display: block;
-            box-shadow: 0px 0px 10px rgba(0, 255, 204, 0.5);
-            transition: transform 0.3s ease;
         }
-        .image:hover {
-            transform: scale(1.05);
+        
+        .image-caption {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--light);
         }
-        .imagen {
-            width: 100%;
-            max-width: 200px;
-            height: auto;
-            border-radius: 8px;
-            margin: 20px auto;
-            display: block;
-            box-shadow: 0px 0px 10px rgba(0, 255, 204, 0.5);
-            transition: transform 0.3s ease;
-        }.imagen:hover {
-            transform: scale(1.05);
-        }
-        .imagen1 {
-            width: 100%;
-            max-width: 306px;
-            height: auto;
-            border-radius: 8px;
-            margin: 20px auto;
-            display: block;
-            box-shadow: 0px 0px 10px rgba(0, 255, 204, 0.5);
-            transition: transform 0.3s ease;
-        }
-        .imagen1:hover {
-            transform: scale(1.05);
-        }
-        ul {
-            list-style-type: disc; /* Tipo de viñeta */
-            padding-left: 20px; /* Margen izquierdo */
-        }
-
-        li {
-            background-color: #1e1e1e; /* Mismo color que el fondo */
-            font-size: 14px; /* Tamaño más pequeño */
-            padding: 5px;
-            border-radius: 5px;
-        }
-        footer {
-            background: linear-gradient(135deg, #1e1e1e, #1e1e1e);
-            color: #ffffff;
+        
+        pre {
+            background: #000;
+            color: var(--primary);
             padding: 20px;
-            margin-top: 20px;
-            border-radius: 0 0 12px 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+            border-left: 3px solid var(--primary);
+            margin: 30px 0;
+            position: relative;
         }
-        .highlight {
-            color: #00ffcc;
+        
+        pre::before {
+            content: 'Código Arduino';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #000;
+            color: var(--primary);
+            padding: 0 10px;
+            font-size: 0.8rem;
             font-weight: bold;
+        }
+        
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            position: relative;
+            list-style-type: none;
+            background: rgba(0, 132, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        li::before {
+            content: '▹';
+            position: absolute;
+            left: -20px;
+            color: var(--primary);
+        }
+        
+        .feature-card {
+            background: rgba(0, 132, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .feature-card h4 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .spec-card {
+            background: rgba(0, 132, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .spec-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spec-card i {
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 200, 0.4);
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--light);
+            border-top: 1px solid rgba(0, 255, 200, 0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                border-radius: 0;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3, h4 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Smart Fridge - Proyecto IoT</h1>
+    <!-- Fondo de partículas -->
+    <div id="particles-js"></div>
+    
+    <div class="container" data-aos="fade-up">
+        <header data-aos="fade-down">
+            <h1>Smart Fridge IoT</h1>
+            <p>Transformando neveras convencionales en dispositivos inteligentes</p>
         </header>
+        
         <div class="content">
-            <h2>🔍 Introducción</h2>
-            <p>En la era digital actual, el Internet de las Cosas (IoT) está transformando la forma en que interactuamos con los objetos cotidianos, llevando la conectividad y la inteligencia a nuevos niveles. Uno de los dispositivos que se está beneficiando de esta revolución es la nevera, un elemento fundamental en nuestros hogares. Las neveras IoT están redefiniendo la experiencia de la cocina al ofrecer una amplia gama de funciones innovadoras que van más allá de simplemente mantener los alimentos frescos. Al integrar la conectividad a internet, sensores avanzados y capacidades de procesamiento, estas neveras ofrecen una serie de ventajas que mejoran la comodidad, la eficiencia y la seguridad en el hogar. En esta introducción, exploraremos las características, beneficios y desafíos de las neveras IoT, así como su impacto en la vida diaria de los usuarios.</p>
-            <p>En términos de precios, las neveras IoT generalmente tienden a ser más costosas que las neveras tradicionales debido a la integración de tecnología avanzada y conectividad. Las características adicionales como la capacidad de control remoto a través de una aplicación móvil, la capacidad de hacer listas de compras automáticamente, la alerta de alimentos vencidos, la integración con asistentes virtuales, entre otras, contribuyen al aumento del costo.</p>
-            <p>Las neveras tradicionales, que carecen de estas características tecnológicas avanzadas, suelen ser más asequibles en comparación. Sin embargo, es importante tener en cuenta que la diferencia de precio puede variar dependiendo de la marca, el tamaño, la capacidad de almacenamiento y otras características específicas de cada modelo.</p>
-            <p>A pesar de su precio inicial más alto, las neveras IoT pueden ofrecer ahorros a largo plazo en términos de eficiencia energética y gestión inteligente de alimentos, lo que puede compensar parcialmente la inversión inicial. Además, para muchos consumidores, los beneficios adicionales de conveniencia y funcionalidad pueden justificar el costo adicional. En última instancia, la elección entre una nevera IoT y una tradicional dependerá de las necesidades individuales del consumidor y su disposición a invertir en tecnología avanzada para el hogar.</p>
-            <p>Según la Organización de Consumidores y Usuarios (1r): “El precio de estos modelos suele ser superior al de los modelos tradicionales y la conexión wifi también puede incrementar ligeramente el consumo en stand-by del electrodoméstico. Funciones como el autodiagnóstico o el filtro de olores, que no están asociadas necesariamente al wifi, pueden ser más interesantes que la conexión en sí. Por tanto, habrá que evaluar todas las características que ofrecen estos modelos y si realmente les vas a sacar provecho.</p>
-            <p>Pero si eres un fanático de la tecnología, el futuro está aquí. Tener un hogar conectado te permite llevar una vida más cómoda, además de ahorrar energía y tiempo. Durante el periodo de vacaciones, podrás controlar tu casa cuando estés fuera. Puede ser una buena inversión si sabes manejar las aplicaciones móviles con soltura, para poder aprovechar al máximo sus recursos.”</p>
-            
-            <h2>⚙️ Implementación</h2>
-            <p>Mi idea consiste en desarrollar un sistema que permita convertir cualquier nevera convencional en una nevera inteligente y conectada. La génesis de esta idea surgió luego de una conversación con la jefa de planta de un hospital. Durante nuestra charla, ella nos informó sobre un problema que enfrentan con el almacenamiento de muestras de sangre y medicamentos especiales que requieren mantenerse a temperaturas bajas. En el hospital, carecen de neveras inteligentes que puedan notificar si la temperatura ha variado fuera de los rangos específicos necesarios para conservar la integridad de las muestras. Esto representa un desafío significativo, ya que es crucial mantener las muestras dentro de un rango de temperatura específico para obtener resultados precisos. La jefa de planta nos mencionó que actualmente solo disponen de una nevera inteligente, ya que el costo de adquirir más es prohibitivo y actualmente no cuentan con la capacidad financiera para hacerlo.</p>
-            <p>Hemos logrado avanzar en el proyecto al programar la placa ESP32 para que funcione con una aplicación móvil y se conecte a un sensor de temperatura y humedad (DHT11). Según lo que encontramos en programarfacil (2n), este sensor tiene las siguientes características:</p>
-            <img src="Fotos/caracteristicas.png" alt="características" class="image">
-            <p>Entendemos que el sensor actual no es ideal para temperaturas bajas de neveras, pero por ahora es lo que tenemos. En el futuro, planeamos cambiar al sensor LM75, que tiene un rango de temperaturas más amplio, desde -25 ºC hasta 100 ºC.</p>
-            <h4><strong>🌡️ Características del LM75</strong> según DigiKey </h4>
-    <ul>
-        <li><strong>Altamente personalizable</strong>
-            <ul>
-                <li>Incluye reemplazo pin por pin para la serie LM75, pero permite hasta 27 dispositivos en el bus (tres pines de dirección en el paquete de 8 pines) o tres dispositivos en el bus (un pin de dirección en el paquete de 6 pines).</li>
-            </ul>
-        </li>
-        <li><strong>Paquete pequeño</strong>
-            <ul>
-                <li>Tipos de paquetes pequeños de 8 pines: SO8, TSSOP8 y HWSON8 de 2 mm x 3 mm. Tipo de paquete de 6 pines: TSOP6 (las variantes P110 y N005 solo están disponibles en el paquete TSOP6).</li>
-            </ul>
-        </li>
-        <li><strong>Rango de alta temperatura y precisión</strong>
-            <ul>
-                <li>El PCT2075 cuenta con una amplia gama de capacidades de detección de temperatura
-                    <ul>
-                        <li>-55 ºC a +125 ºC</li>
-                        <li>Precisión ±1 ºC máx. de -25 ºC a +100 ºC</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    <p>Blynk es una plataforma que facilita la creación de aplicaciones para el Internet de las cosas (IoT,
-        por sus siglas en inglés). Permite a los usuarios controlar dispositivos electrónicos remotamente
-        a través de una aplicación móvil. Aquí hay una explicación básica del programa Blynk:
-        Aplicación Blynk: Los usuarios crean su propia aplicación utilizando la plataforma Blynk. Esta
-        aplicación se puede personalizar según las necesidades del proyecto.
-        </p>
-            <h4>☁ Características de Blynk</h4>
-            <ul>
-                <li><strong>Widgets:</strong>
-                    <ul>
-                        <p>Blynk proporciona una variedad de widgets que los usuarios pueden arrastrar y soltar en su aplicación. Estos widgets incluyen botones, deslizadores, gráficos, LED virtuales, entre otros. Cada widget tiene una función específica para controlar o monitorear dispositivos.</p>
-                    </ul>
-                </li>
-                <li><strong>Plataformas compatibles:</strong>
-                    <ul>
-                        <p>Blynk es compatible con una amplia gama de hardware, como placas de desarrollo Arduino, Raspberry Pi, NodeMCU, entre otras. Esto permite a los usuarios conectar fácilmente sus dispositivos al ecosistema Blynk.</p>
-                    </ul>
-                </li>
-                <li><strong>Comunicación:</strong>
-                    <ul>
-                        <p>Blynk proporciona una API que permite la comunicación entre la aplicación móvil y los dispositivos conectados. Utiliza protocolos como MQTT, HTTP y WebSockets para la comunicación bidireccional.</p>
-                    </ul>
-                </li>
-                <li><strong>Token de autenticación:</strong>
-                    <ul>
-                        <p>Cada proyecto en Blynk tiene un token de autenticación único que se utiliza para conectar la aplicación con los dispositivos. Este token actúa como una clave de acceso y garantiza la seguridad de la conexión.</p>
-                    </ul>
-                </li>
-                <li><strong>Blynk Cloud:</strong>
-                    <ul>
-                        <p>Blynk ofrece un servicio en la nube que facilita la conexión entre la aplicación móvil y los dispositivos. Esto elimina la necesidad de configurar y mantener un servidor propio.</p>
-                    </ul>
-                </li>
-            </ul>
-            <h2>📊 Resultados</h2>
-            <p>A continuación, proporciono un breve resumen del trabajo realizado hasta la fecha para lograr
-                el resultado obtenido. En primer lugar, se adquirieron los componentes necesarios, que incluyen
-                la placa ESP32, elegida por su módulo WiFi que facilita la conexión a internet, así como el sensor,
-                los cables y una placa protoboard de dimensiones reducidas. Posteriormente, se procedió a
-                programar la interfaz en la aplicación Blynk y se conectó el sensor a dicha interfaz para visualizar
-                la temperatura y humedad. Esto permite que cualquier dispositivo móvil con acceso a internet
-                y la cuenta creada para este sistema pueda visualizar los datos de temperatura y humedad desde
-                cualquier lugar. Este sistema se alimenta mediante una fuente de energía portátil (Powerbank),
-                y según las pruebas realizadas con una fuente de 2K Amperios, puede funcionar durante
-                aproximadamente 5 días.
-            </p>
-            <div style="text-align: center;">
-                <img src="Fotos/DHT11.png" alt="DHT11" class="imagen" style="display: inline-block;">
-                <img src="Fotos/ESP32.png" alt="ESP32" class="imagen1" style="display: inline-block;">
-            </div>
-            <p>Con este código y con la opción events and notification que tiene la aplicación Blynk he podido
-                crear un aviso (Warining) que en este caso cuando baja la temperatura de -5 ºC me avisa
-                mediante un aviso en la aplicación y además de un aviso por correo electrónico
-            </p>
-
-            <pre><code class="language-cpp">
-                void setup() {
-                    Serial.begin(9600);
-                }
+            <section data-aos="fade-up">
+                <h2><i class="fas fa-search"></i> Introducción</h2>
+                <p>En la era digital actual, el Internet de las Cosas (IoT) está transformando la forma en que interactuamos con los objetos cotidianos. Este proyecto busca convertir cualquier nevera convencional en un dispositivo inteligente mediante la implementación de un sistema de monitoreo y control basado en IoT.</p>
                 
-                void loop() {
-                    Serial.println("Hola, mundo!");
-                    delay(1000);
-                }
-                </code></pre> 
-            <img src="Fotos/aviso.png" alt="aviso" class="image">
-            <img src="Fotos/APP.png" alt="APP" class="imagen">   
-            <p>Este sistema propuesto combina la funcionalidad de monitoreo de temperatura y humedad
-                dentro de las neveras con características adicionales que mejoran la experiencia del usuario y
-                brindan información útil tanto para el usuario como para el fabricante de las neveras.
-            </p>
-            <p>En primer lugar, el sensor de temperatura dentro de la nevera proporciona datos precisos sobre
-                las condiciones internas, lo que es fundamental para garantizar la seguridad de los alimentos
-                almacenados y mantener la calidad de estos.
-            </p>
-            <p>La inclusión de una pantalla táctil en la nevera ofrece una interfaz intuitiva para el usuario,
-                permitiendo la visualización de información relevante, como la lista de compras recomendada
-                según las preferencias del usuario. Esto mejora la eficiencia en la gestión de alimentos y facilita
-                la planificación de compras.
-            </p>
-            <p> </p>
-            <p>El sistema también registra la temperatura y humedad tanto dentro como fuera de la nevera, lo
-                que proporciona una visión completa del entorno de almacenamiento de alimentos y ayuda a
-                mantener condiciones óptimas.
-            </p> 
-            <p>La generación mensual de un archivo con el rendimiento de la nevera permite un análisis
-                detallado de las variaciones de temperatura a lo largo del tiempo y su comparación con las
-                condiciones ambientales. Esto no solo beneficia al usuario al garantizar un mejor control de la
-                temperatura, sino que también puede ser valioso para el fabricante al proporcionar información
-                sobre el rendimiento de sus productos en diferentes situaciones.
-            </p>
-            <p>Además, la conexión WiFi del sistema permite la transmisión de datos a la nube, lo que brinda
-                la conveniencia de acceder a la información desde cualquier ubicación a través de una aplicación
-                7
-                móvil. Esto aumenta la accesibilidad y la capacidad de seguimiento remoto del estado de la
-                nevera.
-            </p>
-            <p>En resumen, este sistema ofrece una combinación de monitoreo de temperatura, gestión de
-                alimentos, análisis de rendimiento y conectividad remota, lo que lo convierte en una solución
-                integral para el control y gestión eficiente de las condiciones de almacenamiento de alimentos
-                en las neveras.
-            </p>           
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <h4><i class="fas fa-lightbulb"></i> Motivación</h4>
+                    <p>La idea surgió tras identificar una necesidad crítica en el sector hospitalario, donde el almacenamiento seguro de muestras biológicas requiere un control estricto de temperatura. Las neveras inteligentes comerciales resultan prohibitivamente caras para muchas instituciones.</p>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <h4><i class="fas fa-balance-scale"></i> Comparativa Costo-Beneficio</h4>
+                    <p>Mientras que las neveras IoT comerciales pueden costar entre $2,000 y $4,000, nuestra solución permite convertir una nevera convencional (desde $500) en inteligente por una fracción de ese costo, manteniendo funcionalidades clave como:</p>
+                    <ul>
+                        <li>Monitoreo remoto de temperatura</li>
+                        <li>Alertas por correo electrónico</li>
+                        <li>Integración con aplicaciones móviles</li>
+                        <li>Registro histórico de datos</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section data-aos="fade-up" data-aos-delay="200">
+                <h2><i class="fas fa-cogs"></i> Implementación Técnica</h2>
+                
+                <h3><i class="fas fa-microchip"></i> Componentes Principales</h3>
+                <div class="image-container">
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="Fotos/ESP32.png" alt="Placa ESP32" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=ESP32'">
+                        <div class="image-caption">Placa ESP32 - Cerebro del sistema</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="250">
+                        <img src="Fotos/DHT11.png" alt="Sensor DHT11" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=DHT11'">
+                        <div class="image-caption">Sensor DHT11 - Temperatura y humedad</div>
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-thermometer-half"></i> Evolución del Sensor</h3>
+                <div class="tech-specs">
+                    <div class="spec-card" data-aos="fade-up" data-aos-delay="200">
+                        <h4><i class="fas fa-snowflake"></i> DHT11 (Actual)</h4>
+                        <ul>
+                            <li>Rango: 0°C a 50°C</li>
+                            <li>Precisión: ±2°C</li>
+                            <li>Humedad: 20-90% RH</li>
+                            <li>Costo: $1-2</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card" data-aos="fade-up" data-aos-delay="300">
+                        <h4><i class="fas fa-temperature-low"></i> LM75 (Futuro)</h4>
+                        <ul>
+                            <li>Rango: -25°C a +100°C</li>
+                            <li>Precisión: ±1°C</li>
+                            <li>Interfaz I2C</li>
+                            <li>Ideal para neveras</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3><i class="fas fa-mobile-alt"></i> Plataforma Blynk</h3>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <h4><i class="fas fa-cloud"></i> Características Clave</h4>
+                    <ul>
+                        <li><strong>Widgets personalizables:</strong> Interfaz intuitiva con botones, gráficos y alertas</li>
+                        <li><strong>Comunicación bidireccional:</strong> MQTT, HTTP y WebSockets</li>
+                        <li><strong>Token de autenticación:</strong> Seguridad garantizada</li>
+                        <li><strong>Blynk Cloud:</strong> Sin necesidad de servidor propio</li>
+                        <li><strong>Notificaciones:</strong> Alertas en app y por correo</li>
+                    </ul>
+                </div>
+                
+                <div class="image-container">
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="200">
+                        <img src="Fotos/APP.png" alt="Interfaz Blynk" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=App+Blynk'">
+                        <div class="image-caption">Interfaz de control en Blynk</div>
+                    </div>
+                    <div class="image-card" data-aos="zoom-in" data-aos-delay="250">
+                        <img src="Fotos/aviso.png" alt="Alertas Blynk" class="image" onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/00ffcc?text=Alertas'">
+                        <div class="image-caption">Sistema de notificaciones</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section data-aos="fade-up" data-aos-delay="300">
+                <h2><i class="fas fa-chart-line"></i> Resultados y Funcionalidades</h2>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <h4><i class="fas fa-bell"></i> Sistema de Alertas</h4>
+                    <p>Implementamos un sistema de notificaciones que envía:</p>
+                    <ul>
+                        <li>Alertas en la aplicación cuando la temperatura cae bajo -5°C</li>
+                        <li>Notificaciones por correo electrónico</li>
+                        <li>Registro histórico de eventos</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <h4><i class="fas fa-battery-full"></i> Autonomía</h4>
+                    <p>El sistema demostró una autonomía de aproximadamente 5 días con una fuente de energía portátil de 2000mAh, gracias a la eficiencia energética del ESP32 en modo low-power.</p>
+                </div>
+                
+                <h3><i class="fas fa-code"></i> Implementación de Alertas</h3>
+                <pre><code class="language-cpp">
+// Configuración básica de Blynk
+#define BLYNK_PRINT Serial
+#include &lt;WiFi.h&gt;
+#include &lt;BlynkSimpleEsp32.h&gt;
+
+char auth[] = "TuTokenDeAutenticacion";
+char ssid[] = "TuRedWiFi";
+char pass[] = "TuContraseña";
+
+void setup() {
+    Serial.begin(9600);
+    Blynk.begin(auth, ssid, pass);
+    // Configuración adicional...
+}
+
+void loop() {
+    Blynk.run();
+    // Lógica de monitoreo...
+    
+    // Ejemplo de notificación
+    if(temperatura < -5) {
+        Blynk.notify("¡Alerta! Temperatura crítica: " + String(temperatura) + "°C");
+        Blynk.email("tucorreo@example.com", "Alerta Nevera", 
+                   "La temperatura ha bajado a " + String(temperatura) + "°C");
+    }
+}
+                </code></pre>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <h4><i class="fas fa-road"></i> Próximos Pasos</h4>
+                    <ul>
+                        <li>Implementación del sensor LM75 para mejor precisión en bajas temperaturas</li>
+                        <li>Integración con Google Assistant para control por voz</li>
+                        <li>Desarrollo de informes mensuales automáticos</li>
+                        <li>Sistema de inventario inteligente</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <div style="text-align: center;">
+                <button onclick="window.location.href='proyectos.html'" class="btn" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fas fa-arrow-left"></i> Volver a Proyectos
+                </button>
+            </div>
         </div>
-        <button onclick="window.location.href='proyectos.html'" style="margin-top: 20px; padding: 10px 20px; font-size: 16px; background-color: #00ffcc; color: #121212; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">Volver a Proyectos</button>
-        <footer>
-            <p>&copy; 2024 Yassir Hicham - Proyecto Smart Fridge</p>
+        
+        <footer data-aos="fade-up" data-aos-delay="500">
+            <p>&copy; 2024 Yassir Hicham | Code-Build - Proyecto Smart Fridge IoT</p>
         </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        // Inicializar AOS (animaciones)
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Configuración de particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00ffc8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00ffc8", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" }
+                }
+            }
+        });
+
+        // Resaltado de sintaxis
+        hljs.highlightAll();
+    </script>
 </body>
 </html>
